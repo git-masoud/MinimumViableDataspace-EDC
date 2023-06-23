@@ -16,8 +16,8 @@ package org.eclipse.edc.mvd;
 
 import org.eclipse.edc.catalog.spi.FederatedCacheNode;
 import org.eclipse.edc.catalog.spi.FederatedCacheNodeDirectory;
-import org.eclipse.edc.registration.client.api.RegistryApi;
-import org.eclipse.edc.registration.client.models.ParticipantDto;
+import org.eclipse.edc.registration.client.RegistryApiClient;
+import org.eclipse.edc.registration.client.model.ParticipantDto;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.AbstractResult;
 
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  */
 public class RegistrationServiceNodeDirectory implements FederatedCacheNodeDirectory {
 
-    private final RegistryApi apiClient;
+    private final RegistryApiClient apiClient;
     private final FederatedCacheNodeResolver resolver;
     private final Monitor monitor;
 
@@ -40,7 +40,7 @@ public class RegistrationServiceNodeDirectory implements FederatedCacheNodeDirec
      * @param apiClient RegistrationService API client.
      * @param resolver  gets {@link FederatedCacheNode} from {@link ParticipantDto}
      */
-    public RegistrationServiceNodeDirectory(RegistryApi apiClient, FederatedCacheNodeResolver resolver, Monitor monitor) {
+    public RegistrationServiceNodeDirectory(RegistryApiClient apiClient, FederatedCacheNodeResolver resolver, Monitor monitor) {
         this.apiClient = apiClient;
         this.resolver = resolver;
         this.monitor = monitor;
@@ -49,7 +49,10 @@ public class RegistrationServiceNodeDirectory implements FederatedCacheNodeDirec
     @Override
     public List<FederatedCacheNode> getAll() {
         try {
-            return apiClient.listParticipants().stream()
+            var result = apiClient.listParticipants();
+            var participants = result.orElseThrow(apiFailure -> new Exception(apiFailure.getFailureDetail()));
+
+            return participants.stream()
                     .map(resolver::toFederatedCacheNode)
                     .filter(AbstractResult::succeeded)
                     .map(AbstractResult::getContent)

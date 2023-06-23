@@ -17,10 +17,10 @@ plugins {
 }
 
 dependencies {
-    api(edc.spi.ids)
-    api(edc.spi.contract)
-    api(edc.core.connector)
-    implementation(identityHub.spi.core)
+    api(libs.edc.spi.dsp)
+    api(libs.edc.spi.contract)
+    api(libs.edc.core.connector)
+    implementation(libs.identityHub.spi.core)
 
-    testImplementation(edc.policy.engine)
+    testImplementation(libs.edc.policy.engine)
 }

@@ -14,7 +14,7 @@
 		},
 		{
 			"id": "#ids-url",
-			"type": "IDSMessaging",
+			"type": "DSPMessaging",
 			"serviceEndpoint": "http://company1:8282"
 		},
 		{

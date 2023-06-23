@@ -24,50 +24,50 @@ dependencies {
     implementation(project(":extensions:refresh-catalog"))
     implementation(project(":extensions:policies"))
 
-    implementation(edc.core.controlplane)
-    implementation(edc.api.observability)
-    implementation(edc.api.dataManagement)
-    implementation(edc.config.filesystem)
-    implementation(edc.ext.http)
+    implementation(libs.edc.core.controlplane)
+    implementation(libs.edc.api.observability)
+    implementation(libs.edc.api.management)
+    implementation(libs.edc.config.filesystem)
+    implementation(libs.edc.ext.http)
     
     // IDS
-    implementation(edc.ids) {
+    implementation(libs.edc.dsp) {
         // Workaround for https://github.com/eclipse-dataspaceconnector/DataSpaceConnector/issues/1387
         exclude(group = edcGroup, module = "ids-token-validation")
     }
 
     // API key authentication for Data Management API (also used for CORS support)
 
-    implementation(edc.ext.auth.tokenBased)
+    implementation(libs.edc.auth.tokenBased)
 
     // DID authentication for IDS API
-    implementation(edc.bundles.identity)
+    implementation(libs.bundles.edc.identity)
 
     // Blob storage container provisioning
-    implementation(edc.ext.azure.blob.core)
-    implementation(edc.provision.blob)
+    implementation(libs.edc.azure.core.blob)
+    implementation(libs.edc.azure.provision.blob)
     // To use FileSystem vault e.g. -DuseFsVault="true".Only for non-production usages.
-    val useFsVault: Boolean = System.getProperty("useFsVault", "false").toBoolean()
+    val useFsVault: Boolean = System.getProperty("useFsVault", "true").toBoolean()
     if (useFsVault) {
-        implementation(edc.vault.filesystem)
+        implementation(libs.edc.vault.filesystem)
     } else {
-        implementation(edc.vault.azure)
+        implementation(libs.edc.azure.vault)
     }
 
     // Embedded DPF
-    implementation(edc.bundles.dpf)
+    implementation(libs.bundles.edc.dpf)
 
     // Federated catalog
-    implementation(fcc.core)
-    implementation(fcc.api)
+    implementation(libs.fcc.core)
+    implementation(libs.fcc.api)
 
     // Identity Hub
-    implementation(identityHub.core)
-    implementation(identityHub.ext.api)
-    implementation(identityHub.ext.selfdescription.api)
-    implementation(identityHub.core.verifier)
-    implementation(identityHub.ext.credentials.jwt)
-    implementation(identityHub.ext.verifier.jwt)
+    implementation(libs.identityHub.core)
+    implementation(libs.identityHub.api)
+    implementation(libs.identityHub.selfdescription.api)
+    implementation(libs.identityHub.core.verifier)
+    implementation(libs.identityHub.credentials.jwt)
+    implementation(libs.identityHub.verifier.jwt)
 }
 
 application {

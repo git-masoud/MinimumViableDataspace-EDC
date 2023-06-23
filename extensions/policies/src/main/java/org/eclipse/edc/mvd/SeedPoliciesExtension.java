@@ -14,7 +14,7 @@
 
 package org.eclipse.edc.mvd;
 
-import org.eclipse.edc.connector.contract.spi.offer.ContractDefinitionService;
+import org.eclipse.edc.connector.contract.spi.offer.ContractDefinitionResolver;
 import org.eclipse.edc.policy.engine.spi.PolicyEngine;
 import org.eclipse.edc.policy.engine.spi.RuleBindingRegistry;
 import org.eclipse.edc.policy.model.Permission;
@@ -64,7 +64,7 @@ public class SeedPoliciesExtension implements ServiceExtension {
     @Override
     public void initialize(ServiceExtensionContext context) {
         ruleBindingRegistry.bind("USE", ALL_SCOPES);
-        ruleBindingRegistry.bind(ABS_SPATIAL_POSITION, ContractDefinitionService.CATALOGING_SCOPE);
+        ruleBindingRegistry.bind(ABS_SPATIAL_POSITION, ContractDefinitionResolver.CATALOGING_SCOPE);
 
         policyEngine.registerFunction(ALL_SCOPES, Permission.class, ABS_SPATIAL_POSITION, new RegionConstraintFunction(monitor));
     }

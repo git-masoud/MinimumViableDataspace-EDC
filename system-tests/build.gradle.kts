@@ -33,23 +33,24 @@ dependencies {
     }
 
     testImplementation(libs.apache.commons.lang3)
-
-    testImplementation(edc.ext.azure.blob.core)
-    testImplementation(edc.util)
-    testImplementation(libs.azure.storageblob)
+  testImplementation("com.azure.resourcemanager:azure-resourcemanager-storage:2.12.0")
+    testImplementation("com.azure:azure-storage-blob:12.19.1")
+    testImplementation(libs.edc.azure.core.blob)
+    testImplementation(libs.edc.util)
+    testImplementation(libs.edc.azure.storage.blob)
     testImplementation(libs.restAssured)
     testImplementation(libs.awaitility)
     testImplementation(libs.okhttp)
 
     testImplementation(libs.azure.identity)
     testImplementation(libs.azure.keyvault)
-    testImplementation(edc.spi.contract)
-    testImplementation(fcc.spi)
-    testImplementation(edc.policy.evaluator)
+    testImplementation(libs.edc.spi.contract)
+    testImplementation(libs.fcc.spi)
+    testImplementation(libs.edc.policy.evaluator)
 
     // Identity Hub
-    testImplementation(identityHub.core.client)
-    testImplementation(identityHub.ext.credentials.jwt)
-    testImplementation(edc.junit)
+    testImplementation(libs.identityHub.core.client)
+    testImplementation(libs.identityHub.credentials.jwt)
+    testImplementation(libs.edc.junit)
 }
 

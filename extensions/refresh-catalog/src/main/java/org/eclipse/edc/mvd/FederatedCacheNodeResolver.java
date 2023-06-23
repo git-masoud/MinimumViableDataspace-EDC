@@ -18,8 +18,8 @@ import org.eclipse.edc.catalog.spi.FederatedCacheNode;
 import org.eclipse.edc.iam.did.spi.document.DidDocument;
 import org.eclipse.edc.iam.did.spi.document.Service;
 import org.eclipse.edc.iam.did.spi.resolution.DidResolverRegistry;
-import org.eclipse.edc.protocol.ids.spi.types.MessageProtocol;
-import org.eclipse.edc.registration.client.models.ParticipantDto;
+import org.eclipse.edc.protocol.dsp.spi.types.HttpMessageProtocol;
+import org.eclipse.edc.registration.client.model.ParticipantDto;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.Result;
 
@@ -33,8 +33,8 @@ import static java.lang.String.format;
  */
 class FederatedCacheNodeResolver {
 
-    public static final String IDS_MESSAGING = "IDSMessaging";
-    public static final List<String> SUPPORTED_PROTOCOLS = List.of(MessageProtocol.IDS_MULTIPART);
+    public static final String DSP_MESSAGING = "DSPMessaging";
+    public static final List<String> SUPPORTED_PROTOCOLS = List.of(HttpMessageProtocol.DATASPACE_PROTOCOL_HTTP);
 
     private final DidResolverRegistry resolver;
     private final Monitor monitor;
@@ -60,7 +60,7 @@ class FederatedCacheNodeResolver {
     private Optional<String> getUrl(DidDocument didDocument) {
         return didDocument
                 .getService().stream()
-                .filter(service -> service.getType().equals(IDS_MESSAGING))
+                .filter(service -> service.getType().equals(DSP_MESSAGING))
                 .map(Service::getServiceEndpoint)
                 .findFirst();
     }

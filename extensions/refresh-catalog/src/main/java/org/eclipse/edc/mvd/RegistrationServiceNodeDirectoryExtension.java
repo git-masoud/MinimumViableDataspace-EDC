@@ -14,10 +14,10 @@
 
 package org.eclipse.edc.mvd;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.edc.catalog.spi.FederatedCacheNodeDirectory;
 import org.eclipse.edc.iam.did.spi.resolution.DidResolverRegistry;
-import org.eclipse.edc.registration.client.ApiClientFactory;
-import org.eclipse.edc.registration.client.api.RegistryApi;
+import org.eclipse.edc.registration.client.RegistryApiClientFactory;
 import org.eclipse.edc.runtime.metamodel.annotation.Inject;
 import org.eclipse.edc.runtime.metamodel.annotation.Provider;
 import org.eclipse.edc.runtime.metamodel.annotation.Setting;
@@ -59,10 +59,9 @@ public class RegistrationServiceNodeDirectoryExtension implements ServiceExtensi
 
     @Provider
     public FederatedCacheNodeDirectory federatedCacheNodeDirectory() {
-        var apiClient = ApiClientFactory.createApiClient(registrationServiceApiUrl, identityService::obtainClientCredentials);
-        var registryApiClient = new RegistryApi(apiClient);
+        var apiClient = RegistryApiClientFactory.createApiClient(registrationServiceApiUrl, identityService::obtainClientCredentials, monitor, new ObjectMapper() );
         var resolver = new FederatedCacheNodeResolver(didResolverRegistry, monitor);
-        return new RegistrationServiceNodeDirectory(registryApiClient, resolver, monitor);
+        return new RegistrationServiceNodeDirectory(apiClient, resolver, monitor);
     }
 }
 

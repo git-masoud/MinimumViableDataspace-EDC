@@ -19,32 +19,32 @@ plugins {
 }
 
 dependencies {
-    implementation(registrationService.core)
-    implementation(registrationService.core.credential.service)
-    implementation(registrationService.ext.api)
+    implementation(libs.registrationService.core)
+    implementation(libs.registrationService.core.credential.service)
+    implementation(libs.registrationService.api)
 
-    implementation(edc.identity.did.web)
-    implementation(edc.identity.did.core)
-    implementation(edc.core.connector)
-    runtimeOnly(edc.boot)
-    implementation(edc.core.controlplane)
-    implementation(edc.api.observability)
-    implementation(edc.core.micrometer)
-    runtimeOnly(edc.micrometer.jetty)
-    runtimeOnly(edc.micrometer.jersey)
-    implementation(edc.config.filesystem)
-    implementation(identityHub.ext.api)
-    implementation(identityHub.ext.selfdescription.api)
-    implementation(identityHub.core.verifier)
-    implementation(identityHub.ext.credentials.jwt)
-    implementation(identityHub.ext.verifier.jwt)
+    implementation(libs.edc.identity.did.web)
+    implementation(libs.edc.identity.did.core)
+    implementation(libs.edc.core.connector)
+    runtimeOnly(libs.edc.boot)
+    implementation(libs.edc.core.controlplane)
+    implementation(libs.edc.api.observability)
+    implementation(libs.edc.micrometer.core)
+    runtimeOnly(libs.edc.micrometer.jetty)
+    runtimeOnly(libs.edc.micrometer.jersey)
+    implementation(libs.edc.config.filesystem)
+    implementation(libs.identityHub.api)
+    implementation(libs.identityHub.selfdescription.api)
+    implementation(libs.identityHub.core.verifier)
+    implementation(libs.identityHub.credentials.jwt)
+    implementation(libs.identityHub.verifier.jwt)
 
     // To use FileSystem vault e.g. -DuseFsVault="true".Only for non-production usages.
     val useFsVault: Boolean = System.getProperty("useFsVault", "false").toBoolean()
     if (useFsVault) {
-        implementation(edc.vault.filesystem)
+        implementation(libs.edc.vault.filesystem)
     } else {
-        implementation(edc.vault.azure)
+        implementation(libs.edc.azure.vault)
     }
 }
 
